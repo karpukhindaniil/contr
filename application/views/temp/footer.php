@@ -1,22 +1,13 @@
 <footer>
-            <div class = "container-fluid bg-dark text-white">
-                <div class = "row">
-                    <div class = "col-6">                    
-                        <div class  = "copy">
-                        <p>&copy Copyright, 2024 </p>
-                        </div>
-                    </div>  
-                    <div class = "col-6">
-                        <div class = "text">
-                            <p>Карпухин П-4 Задание</p>
-                            <p><br>danil921035@mail.ru</p>
-                        </div>
-                    </div>
-
-                </div>
-            </div>   
-        </footer>
-        <script src = "js/bootstrap.bundle.min.js"></script>
-        <script src = "js/jquery-3.3.1.min.js"></script>
-    </body>
+      <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #808080;">
+        <div class="container-fluid">
+        <center><form class="d-flex" role="search">
+           <p class="p1"><i class=""></i>Новочеркасск ул.Платовский 116, в техникум "НТТИ"<br></p>
+            </form><center>
+          </div>
+        </div>
+      </nav>
+      <center><i class="fa fa-copyright">&nbsp;</i>Все права защищены</center>
+    </footer>
+</body>
 </html>

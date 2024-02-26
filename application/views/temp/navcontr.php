@@ -8,17 +8,14 @@
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav w-100">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="operator/kontr"><u>Контрагенты</u></a>
+                        <a class="nav-link active" aria-current="page" href="main/"><u>Товары</u></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="operator/product"><u>Товары</u></a>
+                        <a class="nav-link active" aria-current="page" href="kontr/orders"><u>Мои заказы</u></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="operator/orders"><u>Список заказов</u></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="operator/dostavka"><u>Доставка заказов</u></a>
-                    </li>
+                        <a class="nav-link active" aria-current="page" href="kontr/orders2"><u>Добавление заказов</u></a>
+                    </li>         
                     <li>
                         <?php
                             echo "<a class='nav-link'>На сайте: $UserLogin</a>";

@@ -1,62 +1,91 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class Main extends CI_Controller{
+
     public function index(){
-        $this->load->view('temp/header.php');
-        //проверим кто на сайте
-        $user = $this->session->userdata();
-        if(!empty($user['UserID']))
-        {
-            $data['UserFIO']=$user['UserFIO'];
-            if($user['UserRole']=="Контрагент"){
-                $this->load->view('temp/navkontragent.php', $data);
-            }
-            if($user['UserRole']=="Оператор"){
-                $this->load->view('temp/navoperator.php', $data);
-            }
-            if($user['UserRole']=="Администратор"){
-                $this->load->view('temp/navbuhgalter.php', $data);
-            }
+        $this->load->view('temp/head.php');
+		$User = $this->session->userdata();
+		if(!empty($User['RoleID'])) {
+            $data['UserLogin'] = $User['UserLogin'];
+			if($User['RoleID'] == 2) {
+				$this->load->view('temp/navoperator.php', $data);
+			}
+			else if($User['RoleID'] == 1) {
+				$this->load->view('temp/navadmin.php',  $data);
+			}
+            else if($User['RoleID'] == 3) {
+				$this->load->view('temp/navcontr.php',  $data);
+			}
         }
-            else{
-            $this->load->view('temp/nav.php');                
-            }        
-        $this->load->model('Tovar_model');
-        $data["tovar"]= $this->Tovar_model->filter_tovar();
-        $this->load->view('main_view.php',$data);
-        $this->load->view('temp/footer.php'); 
+        else
+        {
+        $this->load->view('temp/nav.php');
+        }
+		$this->load->model('Product_model');
+		$data['Product'] = $this->Product_model->Product_select();
+        $this->load->view('view_Product.php', $data);
+        $this->load->view('temp/footer.php');
+    }
+	
+	public function addOrder(){
+        $this->load->view('temp/head.php');
+        $this->load->view('temp/.php');
+        $this->load->view('form_Order.php');
+        $this->load->view('temp/.php'); 
+    }
+	public function PriceList(){
+        $this->load->view('temp/head.php');
+        $this->load->view('temp/.php');
+		$this->load->model('PriceList_model');
+		$data['PriceList'] = $this->PriceList_model->PriceList_select();// grupp_model выполняет свой метод gruppa_select
+        $this->load->view('.php', $data);// результат записываем в $data
+        $this->load->view('temp/.php'); 
+    }
+    public function addPriceList(){
+        $this->load->view('temp/.php');
+        $this->load->view('temp/.php');
+        $this->load->view('form_PriceList.php');
+		$this->load->model('PriceList_model');
+		$data['PriceList'] = $this->PriceList_model->PriceList_select();// grupp_model выполняет свой метод gruppa_select
+        $this->load->view('view_PriceList.php', $data);// результат записываем в $data
+        $this->load->view('temp/.php'); 
+    }
+	
+	public function login(){
+        $this->load->view('temp/head.php');
+        $this->load->view('temp/nav.php');
+		$this->load->view('form_login.php');
+		if(!empty($_POST))
+        {
+            $UserLogin = $_POST['UserLogin'];
+            $UserPassword = $_POST['UserPassword'];
+            $this->load->model('User_model');
+            $User = $this->User_model->user_select($UserLogin, $UserPassword);
+
+            if(!empty($User)){
+                $this->session->set_userdata($User);
+				
+				}
+            redirect("main/");
+        
+ }
+         $this->load->view('temp/footer.php');       
     }
 
-    public function login(){
-        $this->load->view('temp/header.php');
-        $this->load->view('temp/nav.php');
-//запишем данные в сессию 
 
-        if(!empty($_POST))
-        {
-            $userlogin=$_POST['UserLogin'];
-            $userpassword=$_POST['UserPassword'];
-            $this->load->model('User_model');   //В 11 это поздно         
-            $user=$this->User_model->login($userlogin, $userpassword);
-            if(!empty($user))
-            {
-            $this->session->set_userdata($user);
-            redirect('main');                    
-            }                
-            else
-            {
-                echo "Неверен логин или пароль";              
-            }
-        }
-        $this->load->view('login.php');
-        $this->load->view('temp/footer.php');      
-        }    
+ 
 
-        public function logout(){
-            $this->load->library('session');
-            $items = array('UserFIO', 'UserID', 'UserRole');
-            $this->session->unset_userdata($items);
-            redirect('main');
-       }
+	
+	public function exit(){
+        $this->session->unset_userdata('UserLogin');
+        $this->session->unset_userdata('RoleID');
+        redirect('main/login');
+		
+    }
+	
+	
+
+
 
 }
+
 ?>
